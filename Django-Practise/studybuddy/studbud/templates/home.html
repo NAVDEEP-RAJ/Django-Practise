@@ -1,2 +1,15 @@
-{% include 'navbar.html' %}
-<h1>Home page template</h1>
+{% extends 'main.html' %}
+{% block content %}
+<h1>Home page Template</h1>
+<div>
+<div>
+{% for room in rooms%}
+
+<h5>{{room.id}}--{{room.name}}</h5>
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}
