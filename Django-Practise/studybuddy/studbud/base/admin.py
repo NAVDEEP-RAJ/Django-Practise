@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 
-from .models import Rooms,topic,Message
+from .models import Rooms,Topic,Message
 
 admin.site.register(Rooms)
 admin.site.register(Topic)
