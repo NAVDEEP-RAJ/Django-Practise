@@ -2,19 +2,20 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
-rooms=[
+from .models import Rooms
+
+'''rooms=[
     {'id':1,'name':"Let's learn python"},
     {'id':2,'name':"It is easy language"},
     {'id':3,'name':'Third page'}
 
-]
+]'''
 
 def home(request):
-    return render(request,'base/home.html',{'rooms':rooms})
+    rooms=Rooms.objects.all()
+    context={'rooms':rooms}
+    return render(request,'base/home.html',context)
 
 def room(request,pk):
-    room = None
-    for i in rooms:
-        if i['id']==int(pk):
-            room=i
+    room=Rooms.objects.get(id=pk)
     return render(request,'base/rooms.html',{'room':room})
