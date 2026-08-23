@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 
 from django.http import HttpResponse
 
-from .models import Rooms
+from .models import Rooms,Topic
 
 from .forms import RoomForm
 
@@ -14,8 +14,10 @@ from .forms import RoomForm
 ]'''
 
 def home(request):
-    rooms=Rooms.objects.all()
-    context={'rooms':rooms}
+    q=request.GET.get('q') if request.GET.get('q') else ''
+    rooms=Rooms.objects.filter(topic__name__icontains=q)
+    topic = Topic.objects.all()
+    context={'rooms':rooms,'topic':topic}
     return render(request,'base/home.html',context)
 
 def room(request,pk):
