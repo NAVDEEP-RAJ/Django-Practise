@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 
 from django.http import HttpResponse
+from django.db.models import Q
 
 from .models import Rooms,Topic
 
@@ -15,7 +16,9 @@ from .forms import RoomForm
 
 def home(request):
     q=request.GET.get('q','')
-    rooms=Rooms.objects.filter(topic__name__icontains=q)
+    rooms=Rooms.objects.filter(Q(topic__name__icontains=q)|
+                               Q(name__icontains=q)|
+                               Q(description__icontains=q))
     topic = Topic.objects.all()
     context={'rooms':rooms,'topic':topic}
     return render(request,'base/home.html',context)
