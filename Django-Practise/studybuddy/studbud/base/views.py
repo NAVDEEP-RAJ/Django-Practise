@@ -33,4 +33,14 @@ def createroom(request):
     context={'form':form}
     return render(request,'base/rooms_form.html',context)
 
+def updateroom(request,pk):
+    room = Rooms.objects.get(id=pk)
+    form = RoomForm(instance=room)
+    context={'form':form}
+    if request.method=='POST':
+        form = RoomForm(request.POST,instance=room)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render(request,'base/rooms_form.html',context)
 
