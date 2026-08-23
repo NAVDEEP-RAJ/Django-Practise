@@ -19,7 +19,7 @@ def home(request):
     return render(request,'base/home.html',context)
 
 def room(request,pk):
-    room=Rooms.objects.get(id=pk)
+    room = Rooms.objects.get(id=pk)
     return render(request,'base/rooms.html',{'room':room})
 
 def createroom(request):
