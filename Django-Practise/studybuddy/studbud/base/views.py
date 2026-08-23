@@ -14,7 +14,7 @@ from .forms import RoomForm
 ]'''
 
 def home(request):
-    q=request.GET.get('q') if request.GET.get('q') else ''
+    q=request.GET.get('q','')
     rooms=Rooms.objects.filter(topic__name__icontains=q)
     topic = Topic.objects.all()
     context={'rooms':rooms,'topic':topic}
