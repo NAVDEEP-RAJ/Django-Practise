@@ -8,5 +8,5 @@ urlpatterns=[
     path('update-room/<str:pk>',views.updateroom,name='update-room'),
     path('delete-room/<str:pk>',views.deleteroom,name='delete-room'),
     path('login/',views.loginPage,name='login'),
-
+    path('logout/',views.logoutpage,name='logout'),
 ]

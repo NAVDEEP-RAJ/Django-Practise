@@ -10,7 +10,7 @@ from .forms import RoomForm
 from django.contrib import messages
 
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 
 
 '''rooms=[
@@ -91,4 +91,7 @@ def loginPage(request):
 
     return render(request, 'base/login_register.html')
 
+def logoutpage(request):
+    logout(request)
+    return redirect('home')
 
