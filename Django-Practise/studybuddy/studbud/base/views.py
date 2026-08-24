@@ -43,6 +43,10 @@ def createroom(request):
 def updateroom(request,pk):
     room = Rooms.objects.get(id=pk)
     form = RoomForm(instance=room)
+
+    if request.user != room.host:
+        return HttpResponse('You ar enot allowed to do this....this is not your room!!!!')
+
     context={'form':form}
     if request.method=='POST':
         form = RoomForm(request.POST,instance=room)
