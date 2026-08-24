@@ -63,14 +63,32 @@ def deleteroom(request,pk):
         return redirect('home')
     return render(request,'base/delete.html',{'obj':room})
 
+
 def loginPage(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-    try: 
-        user = User.objects.get(username=username)
-    except:
-        messages.error(request, "User doesn't exist")
-    return render(request,'base/login_register.html',{})
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+
+            user = User . objects .get (username=username)
+        except:
+            messages. error(request, 'User does not exist')
+            return render(request,'base/login_register.html')
+
+
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+        )
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username or password is incorrect')
+
+    return render(request, 'base/login_register.html')
 
 
