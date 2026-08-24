@@ -58,6 +58,8 @@ def updateroom(request,pk):
 @login_required(login_url='login')
 def deleteroom(request,pk):
     room = Rooms.objects.get(id=pk)
+    if request.user != room.host:
+            return HttpResponse('You ar enot allowed to do this....this is not your room!!!!')
     if request.method=='POST':
         room.delete()
         return redirect('home')
