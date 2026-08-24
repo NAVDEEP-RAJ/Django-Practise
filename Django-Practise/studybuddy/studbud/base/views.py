@@ -11,14 +11,7 @@ from django.contrib import messages
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-
-
-'''rooms=[
-    {'id':1,'name':"Let's learn python"},
-    {'id':2,'name':"It is easy language"},
-    {'id':3,'name':'Third page'}
-
-]'''
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     q=request.GET.get('q','')
@@ -34,6 +27,7 @@ def room(request,pk):
     room = Rooms.objects.get(id=pk)
     return render(request,'base/rooms.html',{'room':room})
 
+@login_required(login_url='login')
 def createroom(request):
     form = RoomForm()
     if request.method=='POST':
@@ -45,6 +39,7 @@ def createroom(request):
     context={'form':form}
     return render(request,'base/rooms_form.html',context)
 
+@login_required(login_url='login')
 def updateroom(request,pk):
     room = Rooms.objects.get(id=pk)
     form = RoomForm(instance=room)
@@ -56,6 +51,7 @@ def updateroom(request,pk):
             return redirect('home')
     return render(request,'base/rooms_form.html',context)
 
+@login_required(login_url='login')
 def deleteroom(request,pk):
     room = Rooms.objects.get(id=pk)
     if request.method=='POST':
