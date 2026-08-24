@@ -67,6 +67,9 @@ def deleteroom(request,pk):
 
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    page = 'login'
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -76,7 +79,7 @@ def loginPage(request):
             user = User . objects .get (username=username)
         except:
             messages. error(request, 'User does not exist')
-            return render(request,'base/login_register.html')
+            return render(request,'base/login_register.html',{'page':'login'})
 
 
         user = authenticate(
@@ -90,8 +93,12 @@ def loginPage(request):
             return redirect('home')
         else:
             messages.error(request, 'Username or password is incorrect')
+    context={'page':page}
+    return render(request, 'base/login_register.html',context)
 
-    return render(request, 'base/login_register.html')
+def registerpage(request):
+    context={'page':'register'}
+    return render(request, 'base/login_register.html',context)
 
 def logoutpage(request):
     logout(request)

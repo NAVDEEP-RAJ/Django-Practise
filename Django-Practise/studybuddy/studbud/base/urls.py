@@ -9,4 +9,5 @@ urlpatterns=[
     path('delete-room/<str:pk>',views.deleteroom,name='delete-room'),
     path('login/',views.loginPage,name='login'),
     path('logout/',views.logoutpage,name='logout'),
+    path('register/',views.registerpage,name='register'),
 ]
