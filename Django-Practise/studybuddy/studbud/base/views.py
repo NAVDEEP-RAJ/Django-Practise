@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     q=request.GET.get('q','')
@@ -97,8 +98,8 @@ def loginPage(request):
     return render(request, 'base/login_register.html',context)
 
 def registerpage(request):
-    context={'page':'register'}
-    return render(request, 'base/login_register.html',context)
+    form = UserCreationForm()
+    return render(request, 'base/login_register.html',{'form':form})
 
 def logoutpage(request):
     logout(request)
