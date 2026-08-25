@@ -2,6 +2,7 @@
 
 {% block content%}
 {% if page == 'login' %}
+
 <div>
     <form method="POST" action="">
         {% csrf_token %}
@@ -20,13 +21,13 @@
 
 {% else %}
 
-<div>
+<div style="background-color:chocolate">
     <form method="POST" action="">
         {% csrf_token %}
         <hr><br>
         {{ form.as_p }}
 
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" style="background-color: aqua" />
         <p>Already signed up?</p>
         <a href="{% url 'login' %}">Sign in now!!</a>
 
