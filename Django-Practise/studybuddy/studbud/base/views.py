@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.db.models import Q
 
-from .models import Rooms,Topic
+from .models import Rooms,Topic,Message
 
 from .forms import RoomForm
 
@@ -21,12 +21,27 @@ def home(request):
                                Q(description__icontains=q) | 
                                Q(host__username__icontains=q))
     topic = Topic.objects.all()
-    context={'rooms':rooms,'topic':topic}
+    room_count = rooms.count()
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
+    context={'rooms':rooms,'topic':topic,'room_count':room_count,'room_messages':room_messages}
     return render(request,'base/home.html',context)
 
 def room(request,pk):
     room = Rooms.objects.get(id=pk)
-    return render(request,'base/rooms.html',{'room':room})
+
+    if request.method == 'POST':
+        message = Message.objects.create(
+            user = request.user,
+            body = request.POST.get('body'),
+            room = room
+        )
+        room.participants.add(request.user)
+        return redirect('room',pk=room.id)
+
+    room_messages = room.message_set.all()
+    participants = room.participants.all()
+
+    return render(request,'base/rooms.html',{'room':room,'room_messages':room_messages,'participants':participants})
 
 @login_required(login_url='login')
 def createroom(request):
@@ -34,7 +49,9 @@ def createroom(request):
     if request.method=='POST':
         form = RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            room = form.save(commit=False)
+            room.host = request.user
+            room.save()
             return redirect('home')
     
     context={'form':form}
@@ -114,3 +131,13 @@ def logoutpage(request):
     logout(request)
     return redirect('home')
 
+
+@login_required(login_url='login')
+def deletemessage(request,pk):
+    message = Message.objects.get(id=pk)
+    if request.user != message.user :
+            return HttpResponse('You ar enot allowed to do this....this is not your room!!!!')
+    if request.method=='POST':
+        message.delete()
+        return redirect('home')
+    return render(request,'base/delete.html',{'obj':message})
