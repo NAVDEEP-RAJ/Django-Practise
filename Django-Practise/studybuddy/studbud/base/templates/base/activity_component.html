@@ -1,7 +1,7 @@
 <h1 style="background-color:rgb(219, 168, 138);color:brown">Activty</h1><hr>
         {% for msg in room_messages %}
         <div>
-            <p>@{{msg.user}}    {{msg.added|timesince}}</p>
+            <p><a href="{% url 'profile-user' msg.user.id %}">@{{msg.user}}</a>    {{msg.added|timesince}}</p>
             <small>Replied to "{{msg.room}}"</small><br>
             <p>{{msg}}</p>
             {% if msg.user == request.user %}
