@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1 style="background-color:rgb(219, 168, 138);color:brown">Home page Template</h1><hr>
+<h1>Home page</h1><hr>
 <style>
     .home_container{
         display:grid;
@@ -18,7 +18,7 @@
     </div>
 
     <div>
-        <p style="color:brown;background-color:rgb(219, 168, 138);"> Number of rooms - {{room_count}}</p>
+        <p> Number of rooms - {{room_count}}</p>
         <a href="{% url 'create-room' %}"> Create a room</a>
         <hr>
         {% include 'base/feed_component.html' %}

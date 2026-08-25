@@ -1,4 +1,4 @@
-<h1 style="background-color:rgb(219, 168, 138);color:brown">Activty</h1><hr>
+<h1>Activty</h1><hr>
         {% for msg in room_messages %}
         <div>
             <p><a href="{% url 'profile-user' msg.user.id %}">@{{msg.user}}</a>    {{msg.added|timesince}}</p>

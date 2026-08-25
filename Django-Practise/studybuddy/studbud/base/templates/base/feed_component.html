@@ -1,5 +1,5 @@
 {% for room in rooms%}
-        <body style="background-color:bisque;color:brown">
+        <body>
             <div>
                 <a href="{% url 'profile-user' room.host.id %}"> @{{room.host.username}}</a>
                 <h5>{{room.id}}--<a href="{% url 'room' room.id %}">{{room.name}}</a></h5>

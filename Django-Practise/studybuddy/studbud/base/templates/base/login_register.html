@@ -21,13 +21,13 @@
 
 {% elif page == 'register' %}
 
-<div style="background-color:chocolate">
+<div>
     <form method="POST" action="">
         {% csrf_token %}
         <hr><br>
         {{ form.as_p }}
 
-        <input type="submit" value="Register" style="background-color: aqua" />
+        <input type="submit" value="Register"/>
         <p>Already signed up?</p>
         <a href="{% url 'login' %}">Sign in now!!</a>
 
