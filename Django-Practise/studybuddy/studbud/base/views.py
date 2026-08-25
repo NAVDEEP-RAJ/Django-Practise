@@ -72,7 +72,7 @@ def loginPage(request):
         return redirect('home')
     page = 'login'
     if request.method == 'POST':
-        username = request.POST.get('username').lower()
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         try:
@@ -100,16 +100,15 @@ def loginPage(request):
 def registerpage(request):
     form = UserCreationForm()
     if request.method == 'POST':
-        form = UserCreationForm()
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.username.lower()
             user.save()
             login(request,user)
             return redirect('home')
         else:
-            messages.error(request,'Invalid creation form')
-    return render(request, 'base/login_register.html',{'form':form})
+            print(form.errors)
+    return render(request, 'base/login_register.html',{'form':form,'page':'register'})
 
 def logoutpage(request):
     logout(request)
