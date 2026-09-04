@@ -51,7 +51,6 @@ def createroom(request):
         if form.is_valid():
             room = form.save(commit=False)
             room.host = request.user
-            room.save()
             return redirect('home')
     
     context={'form':form}
